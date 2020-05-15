@@ -25,6 +25,7 @@ namespace Lab2.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sarcina>>> GetSarcini()
         {
+//TO DO - filter by deadline - between A and B
             return await _context.Sarcini.ToListAsync();
         }
 
@@ -37,7 +38,7 @@ namespace Lab2.Controllers
             if (sarcina == null)
             {
                 return NotFound();
-            }
+            }         
 
             return sarcina;
         }
@@ -51,6 +52,16 @@ namespace Lab2.Controllers
             if (id != sarcina.Id)
             {
                 return BadRequest();
+            }
+
+            //Ex.1 - Task 3
+            if (sarcina.Stare.Equals(Stare.Closed))
+            {
+                sarcina.ClosedAt = DateTime.Now;
+            }
+            else
+            {
+                sarcina.ClosedAt = default;
             }
 
             _context.Entry(sarcina).State = EntityState.Modified;
@@ -72,6 +83,7 @@ namespace Lab2.Controllers
             }
 
             return NoContent();
+            
         }
 
         // POST: api/TaskManager
