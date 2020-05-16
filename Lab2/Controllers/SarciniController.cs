@@ -12,16 +12,16 @@ namespace Lab2.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class TaskManagerController : ControllerBase
+    public class SarciniController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public TaskManagerController(AppDbContext context)
+        public SarciniController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/TaskManager
+        // GET: api/Sarcini
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sarcina>>> GetSarcini(DateTimeOffset? from = null, DateTimeOffset? to = null)
         {
@@ -37,7 +37,7 @@ namespace Lab2.Controllers
             return await result.ToListAsync();
         }
 
-        // GET: api/TaskManager/5
+        // GET: api/Sarcini/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Sarcina>> GetSarcina(int id)
         {
@@ -46,12 +46,12 @@ namespace Lab2.Controllers
             if (sarcina == null)
             {
                 return NotFound();
-            }         
+            }
 
             return sarcina;
         }
 
-        // PUT: api/TaskManager/5
+        // PUT: api/Sarcini/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -91,10 +91,9 @@ namespace Lab2.Controllers
             }
 
             return NoContent();
-            
         }
 
-        // POST: api/TaskManager
+        // POST: api/Sarcini
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -106,7 +105,7 @@ namespace Lab2.Controllers
             return CreatedAtAction("GetSarcina", new { id = sarcina.Id }, sarcina);
         }
 
-        // DELETE: api/TaskManager/5
+        // DELETE: api/Sarcini/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Sarcina>> DeleteSarcina(int id)
         {
