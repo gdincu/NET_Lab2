@@ -23,10 +23,18 @@ namespace Lab2.Controllers
 
         // GET: api/TaskManager
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sarcina>>> GetSarcini()
+        public async Task<ActionResult<IEnumerable<Sarcina>>> GetSarcini(DateTimeOffset? from = null, DateTimeOffset? to = null)
         {
-//TO DO - filter by deadline - between A and B
-            return await _context.Sarcini.ToListAsync();
+            //Filters results by deadline
+            IQueryable<Sarcina> result = _context.Sarcini;
+            if (from != null && to != null)
+                result = result.Where(f => from <= f.Deadline && f.Deadline <= to);
+            else if (from != null)
+                result = result.Where(f => from <= f.Deadline);
+            else if (to != null)
+                result = result.Where(f => to <= f.Deadline);
+
+            return await result.ToListAsync();
         }
 
         // GET: api/TaskManager/5
