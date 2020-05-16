@@ -34,21 +34,22 @@ namespace Lab2.Controllers
             else if (to != null)
                 result = result.Where(f => to <= f.Deadline);
 
-            return await result.ToListAsync();
+            return await result.Include(e => e.Comments).ToListAsync();
+
         }
 
         // GET: api/Sarcini/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Sarcina>> GetSarcina(int id)
         {
-            var sarcina = await _context.Sarcini.FindAsync(id);
+            var sarcina = _context.Sarcini;
 
             if (sarcina == null)
             {
                 return NotFound();
             }
 
-            return sarcina;
+            return await sarcina.Include(e => e.Comments).SingleOrDefaultAsync(e => e.Id == id);
         }
 
         // PUT: api/Sarcini/5
