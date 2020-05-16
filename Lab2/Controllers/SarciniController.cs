@@ -29,7 +29,7 @@ namespace Lab2.Controllers
             IQueryable<Sarcina> result = _context.Sarcini;
             if (from != null && to != null)
                 result = result.Where(f => from <= f.Deadline && f.Deadline <= to);
-            else if (from != null)
+            if (from != null)
                 result = result.Where(f => from <= f.Deadline);
             else if (to != null)
                 result = result.Where(f => to <= f.Deadline);
